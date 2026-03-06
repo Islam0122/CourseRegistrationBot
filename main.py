@@ -12,6 +12,25 @@ Token = os.getenv("Token")
 bot = Bot(token=Token)
 dp = Dispatcher()
 
+@dp.message(Command("start"))
+async def start(message: Message):
+    await message.answer(
+        "👋 Добро пожаловать!\n\n"
+        "Это бот академии.\n"
+        "Здесь вы можете узнать о курсах и зарегистрироваться.\n\n"
+        "Напишите /help чтобы увидеть все команды."
+    )
+
+@dp.message(Command("help"))
+async def help(message: Message):
+    await message.answer(
+        "📚 Доступные команды:\n\n"
+        "/start — начать работу с ботом\n"
+        "/aboutacademy — информация об академии\n"
+        "/aboutbot — информация о боте\n"
+        "/help — список команд"
+    )
+
 @dp.message(Command('aboutacademy'))
 async def aboutacademy(messege: Message):
     await messege.answer_photo(
