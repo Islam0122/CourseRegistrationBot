@@ -1,54 +1,18 @@
 import asyncio
-import os
-from dotenv import load_dotenv
-from aiogram import Dispatcher, Bot
-from aiogram.types import Message, FSInputFile
-from aiogram.filters import Command
+from aiogram import Bot,Dispatcher
+from config import Config, load_config
+from handlers.command_start import router_start
 
-load_dotenv()
 
-Token = os.getenv("Token")
+async def main() -> None:
+    config: Config = load_config()
+    bot = Bot(token=config.bot.token)
+    dp = Dispatcher()
 
-bot = Bot(token=Token)
-dp = Dispatcher()
+    dp.include_router(router_start)
 
-@dp.message(Command("start"))
-async def start(message: Message):
-    await message.answer(
-        "👋 Добро пожаловать!\n\n"
-        "Это бот академии.\n"
-        "Здесь вы можете узнать о курсах и зарегистрироваться.\n\n"
-        "Напишите /help чтобы увидеть все команды."
-    )
-
-@dp.message(Command("help"))
-async def help(message: Message):
-    await message.answer(
-        "📚 Доступные команды:\n\n"
-        "/start — начать работу с ботом\n"
-        "/aboutacademy — информация об академии\n"
-        "/aboutbot — информация о боте\n"
-        "/help — список команд"
-    )
-
-@dp.message(Command('aboutacademy'))
-async def aboutacademy(messege: Message):
-    await messege.answer_photo(
-        photo=FSInputFile("photo/img_academy.jpg"),
-        caption=f"""Academy — это образовательная академия, созданная для обучения и развития.
-Мы помогаем студентам получать новые знания, развивать навыки и достигать своих целей в образовании и карьере."""
-    )
-
-@dp.message(Command('aboutbot'))
-async def aboutbot(messege: Message):
-    await messege.answer_photo(
-        photo=FSInputFile("photo/robot.webp"),
-        caption=f"""Это бот для регистрации на курсы.
-Он помогает пользователям просматривать доступные курсы, подавать заявки и управлять своей регистрацией быстро и удобно."""
-    )
-
-async def main():
+    await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())
