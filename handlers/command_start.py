@@ -4,6 +4,7 @@ from aiogram.types import Message,FSInputFile,CallbackQuery
 from texts.text import TEXT_START, TEXT_HELP, ABOUT_ACADEMY, ABOUT_BOT, ABOUT_COURSE, REGISTRATION, ADMINS
 from handlers.command_reply import keyboard
 from handlers.command_inline import keyboard_back
+from keyboards import main_menu, course_menu
 router_start = Router()
 
 @router_start.message(Command('start'))
@@ -68,7 +69,17 @@ async def admin(message: Message):
         reply_markup=keyboard_back
     )
 
+@router.callback_query()
+async def callbacks(callback: CallbackQuery):
 
+    if callback.data == "confirm":
+        await callback.message.answer("Вы зарегистрированы!")
+
+    elif callback.data == "cancel":
+        await callback.message.answer("Регистрация отменена")
+
+    elif callback.data == "back":
+        await callback.message.answer("Главное меню", reply_markup=main_menu)
 
 
 
