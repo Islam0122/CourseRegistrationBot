@@ -3,7 +3,8 @@ from aiogram.filters import Command
 from aiogram.types import Message,FSInputFile,CallbackQuery
 from texts.text import TEXT_START, TEXT_HELP, ABOUT_ACADEMY, ABOUT_BOT, ABOUT_COURSE, REGISTRATION, ADMINS
 from handlers.command_reply import keyboard
-from handlers.command_inline import keyboard_back
+from handlers.command_inline import keyboard_back, directions
+
 router_start = Router()
 
 @router_start.message(Command('start'))
@@ -49,7 +50,7 @@ async def about_course(message: Message):
     await message.answer_photo(
         photo=FSInputFile("photo/Без названия.jpg"),
         caption=ABOUT_COURSE,
-        reply_markup=keyboard_back
+        reply_markup=directions
     )
 
 @router_start.message(F.text == "📝 Моя регистрация")
