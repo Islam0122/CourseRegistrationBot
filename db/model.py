@@ -24,3 +24,9 @@ class User(TimestampMixin, Base):
     id: Mapped[int] = mapped_column(primary_key=True) # Уникальный идентификатор пользователя в базе
     telegram_id: Mapped[int] = mapped_column(BigInteger, unique=True) # Telegram ID пользователя (уникальный)
     username: Mapped[str] = mapped_column(String(255))  # Username пользователя Telegram
+
+class Registrations(TimestampMixin, Base):
+    __tablename__ = "registrations"  # название таблицы в базе данных
+    id: Mapped[int] = mapped_column(primary_key=True) # Уникальный идентификатор пользователя в базе
+    user_id: Mapped[int] = mapped_column(BigInteger, unique=True) # Telegram ID пользователя (уникальный)
+    course_id: Mapped[int] = mapped_column(Integer)  # Username пользователя Telegram
