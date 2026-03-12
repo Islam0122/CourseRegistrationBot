@@ -1,6 +1,8 @@
 from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message,FSInputFile,CallbackQuery
+from sqlalchemy.ext.asyncio import AsyncSession
+from db.orm_query_users import orm_add_user
 from texts.text import TEXT_START, TEXT_HELP, ABOUT_ACADEMY, ABOUT_BOT, ABOUT_COURSE, REGISTRATION, ADMINS
 from handlers.command_reply import keyboard
 from handlers.command_inline import keyboard_back, directions
@@ -8,7 +10,8 @@ from handlers.command_inline import keyboard_back, directions
 router_start = Router()
 
 @router_start.message(Command('start'))
-async def start(message: Message):
+async def start(message: Message, session: AsyncSession):
+    await orm_add_user(session, message.from_user.id, message.from_user.username)
     await message.answer_photo(
         photo=FSInputFile("photo/Без названия.jpg"),
         caption=TEXT_START,
@@ -16,9 +19,8 @@ async def start(message: Message):
     )
 @router_start.callback_query(F.data == "back")
 async def back(query: CallbackQuery):
-    await query.message.edit_caption(
-        photo=FSInputFile("photo/Без названия.jpg"),
-        caption=TEXT_START,
+    await query.message.answer(
+        text=TEXT_START,
     )
 
 @router_start.message(Command('help'))
