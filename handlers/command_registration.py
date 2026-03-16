@@ -56,39 +56,6 @@ async def get_course(message: Message, state: FSMContext):
         reply_markup=registration_button
     )
 
-@router_registration.callback_query(F.data == "confirm")
-async def confirm(query: CallbackQuery, state: FSMContext,session: AsyncSession,):
-
-    info = await state.get_data()
-
-    check = await check_registration(
-        session,
-        name=info['name'],
-        course_type=info["course"]
-    )
-
-    if check:
-        await query.message.answer(
-            text="Вы уже зарегистрированы",
-            reply_markup=keyboard_back
-        )
-        return
-
-    new_course = await orm_add_courses(
-        session=session,
-        telegram_id=query.from_user.id,
-        name=info['name'],
-        age=info['age'],
-        phone=info['phone'],
-        course_type=info['course']
-    )
-    await state.clear()
-
-    await query.message.answer(
-        text="Регистрация успешно завершена✅",
-        reply_markup=keyboard_back
-    )
-
 @router_registration.callback_query(F.data == "cancel")
 async def cancel(query: CallbackQuery, state: FSMContext):
     await query.message.answer(
@@ -96,3 +63,43 @@ async def cancel(query: CallbackQuery, state: FSMContext):
         reply_markup=keyboard_back
     )
     await state.clear()
+
+@router_registration.callback_query(F.data == "confirm")
+async def confirm(query: CallbackQuery, state: FSMContext,session: AsyncSession,):
+
+    try:
+        info = await state.get_data()
+
+        check = await check_registration(
+            session,
+            name=info['name'],
+            course_type=info["course"]
+        )
+
+        if check:
+            await query.message.answer(
+                text="Вы уже зарегистрированы",
+                reply_markup=keyboard_back
+            )
+            return
+
+        new_course = await orm_add_courses(
+            session=session,
+            telegram_id=query.from_user.id,
+            name=info['name'],
+            age=info['age'],
+            phone=info['phone'],
+            course_type=info['course']
+        )
+        await state.clear()
+
+        await query.message.answer(
+            text="Регистрация успешно завершена✅",
+            reply_markup=keyboard_back
+        )
+
+    except Exception as err:
+        await query.message.answer(
+            text="Вы уже отменили регистрацию!",
+            reply_markup=keyboard_back
+        )

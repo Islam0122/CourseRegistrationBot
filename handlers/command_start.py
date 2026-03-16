@@ -3,11 +3,19 @@ from aiogram.filters import Command
 from aiogram.types import Message,FSInputFile,CallbackQuery
 from sqlalchemy.ext.asyncio import AsyncSession
 from db.orm_query_users import orm_add_user
-from texts.text import TEXT_START, TEXT_HELP, ABOUT_ACADEMY, ABOUT_BOT, ABOUT_COURSE, REGISTRATION, ADMINS
+from texts.text import TEXT_START, TEXT_HELP, ABOUT_ACADEMY, ABOUT_BOT, ABOUT_COURSE, REGISTRATION, ABOUT_EDIT, ADMINS
 from keyboards.command_reply import keyboard
 from keyboards.command_inline import keyboard_back, directions, further, registration_button
 
 router_start = Router()
+
+@router_start.message(Command('cancel'))
+async def cancel(message: Message):
+    await message.answer_photo(
+        photo=FSInputFile("photo/Без названия.jpg"),
+        caption=TEXT_START,
+        reply_markup=keyboard
+    )
 
 @router_start.message(Command('start'))
 async def start(message: Message, session: AsyncSession):
@@ -44,7 +52,7 @@ async def about(message: Message):
 async def about_bot(message: Message):
     await message.answer_photo(
         photo=FSInputFile("photo/Без названия.jpg"),
-        caption=ABOUT_BOT,
+        caption=ABOUT_EDIT,
         reply_markup=keyboard_back
     )
 

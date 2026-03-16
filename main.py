@@ -5,6 +5,7 @@ from handlers.command_start import router_start
 from handlers.command_backend import router_backend
 from handlers.command_frontend import router_frontend
 from handlers.command_registration import router_registration
+from handlers.command_edit import router_edit
 from db.engine import create_db, drop_db, session_maker
 from db.db import DataBaseSession
 
@@ -31,6 +32,7 @@ async def main() -> None:
     dp.include_router(router_backend)
     dp.include_router(router_frontend)
     dp.include_router(router_registration)
+    dp.include_router(router_edit)
 
     dp.startup.register(on_startup)
 

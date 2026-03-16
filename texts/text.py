@@ -11,6 +11,7 @@ TEXT_HELP = """
 /about_academy — информация об академии
 /about_bot — информация о боте
 /help — список команд"
+/edit_course - выбрать курс
 """
 
 ABOUT_ACADEMY = """
@@ -35,6 +36,10 @@ Backend Development
 Frontend Development
 
 Начни карьеру в IT вместе с нами
+"""
+
+ABOUT_EDIT = """
+    На какой курс Хотите записаться?
 """
 
 REGISTRATION = """
