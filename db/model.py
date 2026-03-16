@@ -11,6 +11,7 @@ class TimestampMixin:
     )
 
 class User(TimestampMixin, Base):
+<<<<<<< HEAD
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(primary_key=True)
     telegram_id: Mapped[int] = mapped_column(BigInteger, unique=True)
@@ -25,3 +26,15 @@ class Course(TimestampMixin, Base):
     phone: Mapped[str] = mapped_column(String(255))
     course_type: Mapped[str] = mapped_column(String(255))
 
+=======
+    __tablename__ = "users"  # название таблицы в базе данных
+    id: Mapped[int] = mapped_column(primary_key=True) # Уникальный идентификатор пользователя в базе
+    telegram_id: Mapped[int] = mapped_column(BigInteger, unique=True) # Telegram ID пользователя (уникальный)
+    username: Mapped[str] = mapped_column(String(255))  # Username пользователя Telegram
+
+class Registrations(TimestampMixin, Base):
+    __tablename__ = "registrations"  # название таблицы в базе данных
+    id: Mapped[int] = mapped_column(primary_key=True) # Уникальный идентификатор пользователя в базе
+    user_id: Mapped[int] = mapped_column(BigInteger, unique=True) # Telegram ID пользователя (уникальный)
+    course_id: Mapped[int] = mapped_column(Integer)  # Username пользователя Telegram
+>>>>>>> 3d3b67c5c0d4e1c62b69ef99b107d7976669b24c
