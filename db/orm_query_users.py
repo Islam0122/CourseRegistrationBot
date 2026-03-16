@@ -38,13 +38,11 @@ async def orm_add_courses(session: AsyncSession, telegram_id: int, name: str, ag
         return None
 
 async def check_registration(session: AsyncSession, name: str ,course_type: str):
-
     query = select(Course).where(
         and_(
             Course.name == name,
             Course.course_type == course_type
         )
     )
-
     result = await session.execute(query)
     return result.scalars().first()
