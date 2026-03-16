@@ -8,6 +8,19 @@ back.add(
 keyboard_back = back.as_markup()
 
 
+further = InlineKeyboardBuilder()
+further.add(
+    InlineKeyboardButton(text="Далее", callback_data="further"),
+)
+further = further.as_markup()
+
+registration_button = InlineKeyboardBuilder()
+registration_button.add(
+    InlineKeyboardButton(text="Подтвердить✅", callback_data="confirm"),
+    InlineKeyboardButton(text="Отменить❌", callback_data="cancel"),
+)
+registration_button = registration_button.as_markup()
+
 direction = InlineKeyboardBuilder()
 direction.add(
     InlineKeyboardButton(text="Backend", callback_data="backend"),

@@ -4,8 +4,8 @@ from aiogram.types import Message,FSInputFile,CallbackQuery
 from sqlalchemy.ext.asyncio import AsyncSession
 from db.orm_query_users import orm_add_user
 from texts.text import TEXT_START, TEXT_HELP, ABOUT_ACADEMY, ABOUT_BOT, ABOUT_COURSE, REGISTRATION, ADMINS
-from handlers.command_reply import keyboard
-from handlers.command_inline import keyboard_back, directions
+from keyboards.command_reply import keyboard
+from keyboards.command_inline import keyboard_back, directions, further, registration_button
 
 router_start = Router()
 
@@ -17,6 +17,7 @@ async def start(message: Message, session: AsyncSession):
         caption=TEXT_START,
         reply_markup=keyboard
     )
+
 @router_start.callback_query(F.data == "back")
 async def back(query: CallbackQuery):
     await query.message.answer(
@@ -60,7 +61,7 @@ async def registration(message: Message):
     await message.answer_photo(
         photo=FSInputFile("photo/Без названия.jpg"),
         caption=REGISTRATION,
-        reply_markup=keyboard_back
+        reply_markup=further
     )
 
 @router_start.message(F.text == "⚙ Админ")
@@ -70,8 +71,3 @@ async def admin(message: Message):
         caption=ADMINS,
         reply_markup=keyboard_back
     )
-
-
-
-
-

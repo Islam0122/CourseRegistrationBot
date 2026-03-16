@@ -1,11 +1,11 @@
 from aiogram import Router, F
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.context import FSMContext
-from aiogram.types import CallbackQuery, InlineKeyboardButton, ReplyKeyboardRemove
+from aiogram.types import CallbackQuery
 from aiogram.types import InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from texts.question_for_command import questions_for_frontend
-from handlers.command_inline import keyboard_back
+from keyboards.command_inline import keyboard_back
 
 router_frontend = Router()
 
