@@ -12,6 +12,7 @@ TEXT_HELP = """
 /about_bot — информация о боте
 /help — список команд"
 /edit_course - выбрать курс
+/admin - админ панель
 """
 
 ABOUT_ACADEMY = """
@@ -57,5 +58,8 @@ REGISTRATION = """
 
 ADMINS = """
 ⚙ Админ доступ
-Введите пароль:
+/view_students - Просмотр всех студентов
+/create_new_course - Добавить новый курс
+/delete_course - Удалить курс
+/update_course - Обновить курс
 """

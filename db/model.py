@@ -16,11 +16,16 @@ class User(TimestampMixin, Base):
     telegram_id: Mapped[int] = mapped_column(BigInteger, unique=True)
     username: Mapped[str] = mapped_column(String(255))
 
-class Course(TimestampMixin, Base):
-    __tablename__ = "courses"
+class Registration(TimestampMixin, Base):
+    __tablename__ = "registration"
     course_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     telegram_id: Mapped[int] = mapped_column(BigInteger)
     name: Mapped[str] = mapped_column(String(255))
     age: Mapped[str] = mapped_column(String(255))
     phone: Mapped[str] = mapped_column(String(255))
     course_type: Mapped[str] = mapped_column(String(255))
+
+class Course(TimestampMixin, Base):
+    __tablename__ = "courses"
+    course_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    course_name: Mapped[str] = mapped_column(String(255))
