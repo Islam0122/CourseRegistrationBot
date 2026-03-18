@@ -3,9 +3,9 @@ from aiogram.filters import Command
 from aiogram.types import Message,FSInputFile,CallbackQuery
 from sqlalchemy.ext.asyncio import AsyncSession
 from db.orm_query_users import orm_add_user
-from texts.text import TEXT_START, TEXT_HELP, ABOUT_ACADEMY, ABOUT_BOT, ABOUT_COURSE, REGISTRATION, ABOUT_EDIT, ADMINS
+from texts.text import TEXT_START, TEXT_HELP, ABOUT_ACADEMY, REGISTRATION, ADMINS, ABOUT_BOT
 from keyboards.command_reply import keyboard
-from keyboards.command_inline import keyboard_back, directions, further, registration_button
+from keyboards.command_inline import keyboard_back, further
 
 router_start = Router()
 
@@ -28,8 +28,10 @@ async def start(message: Message, session: AsyncSession):
 
 @router_start.callback_query(F.data == "back")
 async def back(query: CallbackQuery):
-    await query.message.answer(
-        text=TEXT_START,
+    await query.message.answer_photo(
+        photo=FSInputFile("photo/Без названия.jpg"),
+        caption=TEXT_HELP,
+        reply_markup=keyboard_back
     )
 
 @router_start.message(Command('help'))
@@ -52,19 +54,11 @@ async def about(message: Message):
 async def about_bot(message: Message):
     await message.answer_photo(
         photo=FSInputFile("photo/Без названия.jpg"),
-        caption=ABOUT_EDIT,
+        caption=ABOUT_BOT,
         reply_markup=keyboard_back
     )
 
-@router_start.message(F.text == "📚 Курсы")
-async def about_course(message: Message):
-    await message.answer_photo(
-        photo=FSInputFile("photo/Без названия.jpg"),
-        caption=ABOUT_COURSE,
-        reply_markup=directions
-    )
-
-@router_start.message(F.text == "📝 Моя регистрация")
+@router_start.message(F.text == "📝 Регистрация")
 async def registration(message: Message):
     await message.answer_photo(
         photo=FSInputFile("photo/Без названия.jpg"),

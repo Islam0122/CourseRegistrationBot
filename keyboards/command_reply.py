@@ -5,7 +5,7 @@ builder = ReplyKeyboardBuilder()
 
 builder.add(
     KeyboardButton(text="📚 Курсы"),
-    KeyboardButton(text="📝 Моя регистрация"),
+    KeyboardButton(text="📝 Регистрация"),
     KeyboardButton(text="⚙ Админ"),
 )
 

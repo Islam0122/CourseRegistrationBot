@@ -8,8 +8,11 @@ from handlers.command_frontend import router_frontend
 from handlers.command_registration import router_registration
 from handlers.command_edit import router_edit
 from handlers.command_admin import router_admin
+from handlers.command_parser import parser_admin
+from handlers.command_info_course import router_info_course
 from db.engine import create_db, drop_db, session_maker
 from db.db import DataBaseSession
+
 
 async def on_startup():
     run_param = False
@@ -39,6 +42,8 @@ async def main() -> None:
     dp.include_router(router_edit)
     dp.include_router(router_admin)
     dp.include_router(router_group_user)
+    dp.include_router(parser_admin)
+    dp.include_router(router_info_course)
 
     dp.startup.register(on_startup)
 
